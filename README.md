@@ -1,2 +1,2 @@
-# rolling-stone
-Analysing Bob's Lyrics
+# Like a Rolling Stone
+An analysis of Bob Dylan's lyrics.
