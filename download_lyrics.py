@@ -1,20 +1,16 @@
 import configparser
 import lyricsgenius as genius
 
-def get_name(writer):
-    return writer[0]
-
 def written_by(author, song):
-    writers = [get_name(writer) for writer in song.writer_artists]
-    return author in writers
+    writers = [w[0] for w in song.writer_artists]
+    return not writers or author in writers
 
 config = configparser.ConfigParser()
 config.read('config.ini')
 token = config['GENIUS']['ACCESS_TOKEN']
 
 api = genius.Genius(token)
-artist = api.search_artist('Bob Dylan', max_songs=20)
-artist._songs = [song for song in artist.songs if written_by(artist.name, song)]
+bob = api.search_artist('Bob Dylan', max_songs=20)
+bob._songs = [s for s in bob.songs if written_by(bob.name, s)]
 
-for song in artist.songs:
-    print(song.title, song.year)
+bob.save_lyrics(filename='data/dylan')
